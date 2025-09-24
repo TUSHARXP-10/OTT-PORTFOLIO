@@ -4,10 +4,13 @@ import ProjectCarousel from "@/components/ProjectCarousel";
 import NetflixBottomNav from "@/components/NetflixBottomNav";
 import { Button } from "@/components/ui/button";
 import { useCategories, useProjectsByCategory, useProjects } from "@/hooks/useProjects";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { data: categories = [] } = useCategories();
   const { data: allProjects = [] } = useProjects();
+  const { user, isAdmin } = useAuth();
   
   // Get projects by category name for dynamic carousels
   const getProjectsForCategory = (categoryName: string) => {
@@ -135,8 +138,22 @@ const Index = () => {
               Add projects to your Supabase database to see them featured here in true Netflix style.
             </p>
             <div className="flex justify-center space-x-4">
-              <Button className="netflix-btn-primary">Get Started</Button>
-              <Button className="netflix-btn-secondary">Learn More</Button>
+              {user ? (
+                isAdmin ? (
+                  <Button asChild className="netflix-btn-primary">
+                    <Link to="/admin">Admin Panel</Link>
+                  </Button>
+                ) : (
+                  <Button className="netflix-btn-primary">Get Started</Button>
+                )
+              ) : (
+                <>
+                  <Button asChild className="netflix-btn-primary">
+                    <Link to="/auth">Sign In</Link>
+                  </Button>
+                  <Button className="netflix-btn-secondary">Learn More</Button>
+                </>
+              )}
             </div>
           </div>
         )}
