@@ -34,7 +34,7 @@ const SettingsAdmin = () => {
       
       if (userError) throw userError;
 
-      const targetUser = userData.users.find(u => u.email === email);
+      const targetUser = userData?.users?.find((u: any) => u.email === email);
       
       if (!targetUser) {
         toast({

@@ -86,7 +86,12 @@ const ProjectsAdmin = () => {
     setIsSubmitting(true);
 
     const projectData = {
-      ...data,
+      title: data.title,
+      description: data.description,
+      image: data.image,
+      category_id: data.category_id || null,
+      status: data.status || 'In Progress',
+      featured: data.featured || false,
       github_url: data.github_url || null,
       vercel_url: data.vercel_url || null,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],

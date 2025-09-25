@@ -37,9 +37,7 @@ const Dashboard = () => {
     },
   ];
 
-  const recentProjects = projects
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 5);
+  const recentProjects = projects?.slice(0, 5) || [];
 
   return (
     <div className="space-y-6">

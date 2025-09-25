@@ -109,7 +109,7 @@ const AboutAdmin = () => {
     setIsSubmitting(true);
 
     const aboutData = {
-      ...data,
+      name: data.name,
       email: data.email || null,
       phone: data.phone || null,
       location: data.location || null,

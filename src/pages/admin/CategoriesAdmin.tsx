@@ -71,9 +71,10 @@ const CategoriesAdmin = () => {
     setIsSubmitting(true);
 
     const categoryData = {
-      ...data,
+      name: data.name || 'Untitled Category',
       description: data.description || null,
       icon: data.icon || null,
+      display_order: data.display_order,
     };
 
     try {
