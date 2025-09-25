@@ -1,13 +1,15 @@
-import { Search, Cast, User, X, Bell } from 'lucide-react';
+import { Search, Cast, User, X, Bell, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAbout } from '@/hooks/useAbout';
 import { useSearchProjects } from '@/hooks/useSearchProjects';
+import { useProfile } from '@/contexts/ProfileContext';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NetflixNavbar = () => {
   const { data: about } = useAbout();
+  const { selectedProfile } = useProfile();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -75,25 +77,44 @@ const NetflixNavbar = () => {
       <div className="flex items-center justify-between">
         {/* Left - Netflix Logo + Navigation */}
         <div className="flex items-center space-x-8">
+          {/* Back to Profile Selection */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:text-netflix-text-secondary transition-colors"
+            onClick={() => navigate('/')}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+
           {/* Netflix Logo */}
           <div className="flex items-center space-x-3">
             <div className="bg-netflix-red text-white px-2 py-1 font-black text-xl tracking-tight">
               N
             </div>
             <h1 className="text-xl font-medium text-white hidden sm:block">
-              {about?.name || 'Portfolio'}
+              {about?.name || 'Portfolio'} {selectedProfile && `• ${selectedProfile}`}
             </h1>
           </div>
 
           {/* Navigation Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            <button className="text-white hover:text-netflix-text-secondary transition-colors text-sm font-medium">
+            <button 
+              onClick={() => navigate('/portfolio')}
+              className="text-white hover:text-netflix-text-secondary transition-colors text-sm font-medium"
+            >
               Home
             </button>
-            <button className="text-netflix-text-secondary hover:text-white transition-colors text-sm">
+            <button 
+              onClick={() => navigate('/portfolio#projects')}
+              className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
+            >
               Projects
             </button>
-            <button className="text-netflix-text-secondary hover:text-white transition-colors text-sm">
+            <button 
+              onClick={() => navigate('/portfolio#about')}
+              className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
+            >
               About
             </button>
             <button className="text-netflix-text-secondary hover:text-white transition-colors text-sm">

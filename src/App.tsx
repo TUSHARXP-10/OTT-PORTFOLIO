@@ -4,11 +4,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ProfileProvider } from "@/contexts/ProfileContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
+import ProfileSelection from "./pages/ProfileSelection";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import ProjectsAdmin from "./pages/admin/ProjectsAdmin";
@@ -21,12 +23,14 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+      <ProfileProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<ProfileSelection />} />
+            <Route path="/portfolio" element={<Index />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
             <Route path="/auth" element={<Auth />} />
             
@@ -48,8 +52,9 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+    </ProfileProvider>
+  </AuthProvider>
+</QueryClientProvider>
 );
 
 export default App;
