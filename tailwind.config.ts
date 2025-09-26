@@ -68,6 +68,10 @@ export default {
         "gradient-overlay": "var(--gradient-overlay)",
         "gradient-shine": "var(--gradient-shine)",
       },
+      fontFamily: {
+        'serif': ['Playfair Display', 'Cormorant Garamond', 'serif'],
+        'sans': ['Netflix Sans', 'Inter', 'system-ui', 'sans-serif'],
+      },
       boxShadow: {
         netflix: "var(--shadow-netflix)",
         "card-hover": "var(--shadow-card)",

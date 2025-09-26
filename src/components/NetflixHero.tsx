@@ -1,19 +1,63 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Play, Plus, Info, Volume2, VolumeX } from "lucide-react";
+import { Play, Plus, Info, Volume2, VolumeX, Heart } from "lucide-react";
 import { useCategories, useFeaturedProjects } from "@/hooks/useProjects";
 import { useNavigate } from "react-router-dom";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Card } from "@/components/ui/card";
+import romanticSlide1 from "@/assets/romantic-slide-1.jpg";
+import romanticSlide2 from "@/assets/romantic-slide-2.jpg";
+import romanticSlide3 from "@/assets/romantic-slide-3.jpg";
 
 const NetflixHero = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isMuted, setIsMuted] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const { data: categories = [] } = useCategories();
   const { data: featuredProjects = [] } = useFeaturedProjects();
   
-  const featuredProject = featuredProjects[0];
-  
   const categoryTabs = ['All', ...categories.map(cat => cat.name)];
+  
+  const cinematicMovies = [
+    {
+      id: 1,
+      title: "The Perfect Match",
+      description: "When two hearts collide in the digital age, sparks fly in this modern romantic masterpiece.",
+      image: romanticSlide1,
+      matchPercentage: 97,
+      genre: "Romantic Drama",
+      year: 2024,
+      rating: "PG-13"
+    },
+    {
+      id: 2,
+      title: "Lovable Hearts",
+      description: "A tale of passion, dreams, and the courage to love against all odds.",
+      image: romanticSlide2,
+      matchPercentage: 94,
+      genre: "Romance",
+      year: 2024,
+      rating: "PG"
+    },
+    {
+      id: 3,
+      title: "Forever Yours",
+      description: "An epic love story that transcends time, space, and everything in between.",
+      image: romanticSlide3,
+      matchPercentage: 99,
+      genre: "Epic Romance",
+      year: 2024,
+      rating: "PG-13"
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % cinematicMovies.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [cinematicMovies.length]);
 
   return (
     <>
@@ -36,116 +80,128 @@ const NetflixHero = () => {
         </div>
       </div>
 
-      {/* Netflix Hero Section */}
-      <section className="relative min-h-[75vh] pt-24 overflow-hidden">
-        {featuredProject ? (
-          <>
-            {/* Hero Background */}
-            <div className="absolute inset-0">
-              <img
-                src={featuredProject.image}
-                alt={featuredProject.title}
-                className="w-full h-full object-cover object-center scale-105"
-              />
-              
-              {/* Netflix-style Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-r from-netflix-black/90 via-netflix-black/40 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-netflix-black via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-b from-netflix-black/20 via-transparent to-netflix-black/60" />
-            </div>
-
-            {/* Hero Content */}
-            <div className="relative z-10 flex items-center min-h-[75vh] px-4 md:px-12">
-              <div className="max-w-2xl space-y-6 animate-fade-in">
-                {/* Netflix N Logo + Featured Badge */}
-                <div className="flex items-center space-x-3">
-                  <div className="bg-netflix-red text-white px-3 py-1 rounded text-sm font-bold tracking-wider">
-                    N SERIES
+      {/* Cinematic Netflix Hero Carousel */}
+      <section className="relative min-h-screen pt-16 overflow-hidden">
+        <Carousel className="w-full h-full relative">
+          <CarouselContent className="-ml-0">
+            {cinematicMovies.map((movie, index) => (
+              <CarouselItem key={movie.id} className="pl-0 basis-full">
+                <Card className="border-0 rounded-none h-screen relative overflow-hidden">
+                  {/* Hero Background */}
+                  <div className="absolute inset-0">
+                    <img
+                      src={movie.image}
+                      alt={movie.title}
+                      className="w-full h-full object-cover object-center scale-105"
+                    />
+                    
+                    {/* Cinematic Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
+                    
+                    {/* Glossy overlay effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
                   </div>
-                  {featuredProject.featured && (
-                    <div className="netflix-badge-featured animate-glow-pulse">
-                      ⭐ FEATURED
+
+                  {/* Hero Content */}
+                  <div className="relative z-10 flex items-center justify-center min-h-screen px-4 md:px-16">
+                    <div className="max-w-4xl text-center space-y-8 animate-fade-in">
+                      {/* Netflix N Logo + Match Badge */}
+                      <div className="flex items-center justify-center space-x-4 mb-6">
+                        <div className="bg-netflix-red text-white px-4 py-2 rounded text-sm font-bold tracking-wider flex items-center gap-2">
+                          <Heart className="h-4 w-4 animate-pulse text-white" />
+                          N ORIGINALS
+                        </div>
+                        <div className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                          {movie.matchPercentage}% Match
+                        </div>
+                        <div className="text-white/80 text-sm font-medium">
+                          {movie.year} • {movie.rating} • {movie.genre}
+                        </div>
+                      </div>
+
+                      {/* Cinematic Title with Elegant Serif Typography */}
+                      <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white leading-tight netflix-text-glow">
+                        {movie.title}
+                      </h1>
+
+                      {/* Description */}
+                      <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+                        {movie.description}
+                      </p>
+
+                      {/* Floating Hearts Animation */}
+                      <div className="absolute top-1/4 left-1/4 animate-bounce opacity-30">
+                        <Heart className="h-8 w-8 text-netflix-red fill-netflix-red" />
+                      </div>
+                      <div className="absolute top-1/3 right-1/4 animate-pulse opacity-20" style={{ animationDelay: '1s' }}>
+                        <Heart className="h-6 w-6 text-pink-400 fill-pink-400" />
+                      </div>
+                      <div className="absolute bottom-1/4 left-1/3 animate-bounce opacity-25" style={{ animationDelay: '2s' }}>
+                        <Heart className="h-10 w-10 text-red-400 fill-red-400" />
+                      </div>
+
+                      {/* Action Buttons - Cinematic Style */}
+                      <div className="flex items-center justify-center space-x-6 pt-8">
+                        <Button 
+                          size="lg" 
+                          className="bg-white text-black hover:bg-white/90 text-xl px-12 py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                        >
+                          <Play className="mr-4 h-7 w-7" fill="currentColor" />
+                          Play
+                        </Button>
+                        
+                        <Button 
+                          size="lg" 
+                          className="bg-white/20 text-white border-2 border-white/50 hover:bg-white/30 text-xl px-10 py-4 h-auto font-semibold rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                        >
+                          <Info className="mr-4 h-6 w-6" />
+                          More Info
+                        </Button>
+
+                        <Button 
+                          size="lg" 
+                          className="bg-transparent border-2 border-netflix-red text-netflix-red hover:bg-netflix-red hover:text-white text-xl px-8 py-4 h-auto font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                        >
+                          <Plus className="mr-3 h-6 w-6" />
+                          My List
+                        </Button>
+                      </div>
                     </div>
-                  )}
-                  {featuredProject.status === 'Live' && (
-                    <div className="netflix-badge-live">
-                      ● LIVE
-                    </div>
-                  )}
-                </div>
-
-                {/* Title with Netflix styling */}
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight netflix-text-glow">
-                  {featuredProject.title}
-                </h1>
-
-                {/* Description */}
-                <p className="text-lg md:text-xl text-netflix-text-secondary max-w-lg leading-relaxed">
-                  {featuredProject.description}
-                </p>
-
-                {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {featuredProject.tags?.slice(0, 4).map((tag) => (
-                    <span key={tag} className="netflix-badge-category text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons - Netflix Style */}
-                <div className="flex items-center space-x-4 pt-4">
-                  <Button 
-                    size="lg" 
-                    className="netflix-btn-primary text-lg px-8 py-3 h-auto font-bold"
-                    onClick={() => navigate(`/project/${featuredProject.id}`)}
-                  >
-                    <Play className="mr-3 h-6 w-6" fill="currentColor" />
-                    View Project
-                  </Button>
-                  
-                  <Button 
-                    size="lg" 
-                    className="netflix-btn-secondary text-lg px-6 py-3 h-auto font-semibold"
-                    onClick={() => navigate(`/project/${featuredProject.id}`)}
-                  >
-                    <Info className="mr-3 h-5 w-5" />
-                    More Info
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Audio Control - Netflix Style */}
-            <div className="absolute bottom-8 right-8 z-20">
+                  </div>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          
+          {/* Navigation Controls */}
+          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 border-white/30 text-white hover:bg-black/70 w-14 h-14" />
+          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 border-white/30 text-white hover:bg-black/70 w-14 h-14" />
+          
+          {/* Slide Indicators */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+            {cinematicMovies.map((_, index) => (
               <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="w-12 h-12 rounded-full border-2 border-white/60 bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-white hover:bg-black/60 transition-all duration-200"
-              >
-                {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-              </button>
-            </div>
-
-            {/* Category Badge */}
-            <div className="absolute bottom-8 left-4 md:left-12 z-20">
-              <div className="netflix-badge-category">
-                {featuredProject.categories?.name}
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="relative z-10 flex items-center justify-center min-h-[75vh] px-4">
-            <div className="text-center space-y-4 animate-fade-in">
-              <div className="text-6xl animate-float mb-4">🎬</div>
-              <h1 className="text-4xl md:text-6xl font-bold text-white netflix-text-glow">
-                Coming Soon
-              </h1>
-              <p className="text-xl text-netflix-text-secondary max-w-md mx-auto">
-                Featured projects will appear here. Add projects to your portfolio to get started.
-              </p>
-            </div>
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentSlide ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/60'
+                }`}
+                onClick={() => setCurrentSlide(index)}
+              />
+            ))}
           </div>
-        )}
+        </Carousel>
+
+        {/* Audio Control */}
+        <div className="absolute bottom-8 right-8 z-20">
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="w-14 h-14 rounded-full border-2 border-white/60 bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-white hover:bg-black/60 transition-all duration-300"
+          >
+            {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
+          </button>
+        </div>
       </section>
     </>
   );
