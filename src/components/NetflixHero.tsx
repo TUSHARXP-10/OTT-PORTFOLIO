@@ -147,6 +147,7 @@ const NetflixHero = () => {
                         <Button 
                           size="lg" 
                           className="bg-white text-black hover:bg-white/90 text-xl px-12 py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                          onClick={() => navigate('/about')}
                         >
                           <Play className="mr-4 h-7 w-7" fill="currentColor" />
                           Play

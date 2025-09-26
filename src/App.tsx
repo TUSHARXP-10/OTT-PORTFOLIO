@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
+import About from "./pages/About";
 import ProfileSelection from "./pages/ProfileSelection";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/" element={<ProfileSelection />} />
             <Route path="/portfolio" element={<Index />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
+            <Route path="/about" element={<About />} />
             <Route path="/auth" element={<Auth />} />
             
             {/* Admin Routes */}
