@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Play, Plus, Info, Volume2, VolumeX, Heart } from "lucide-react";
-import { useCategories, useFeaturedProjects } from "@/hooks/useProjects";
+import { useCategories } from "@/hooks/useProjects";
+import { useActiveBanners } from "@/hooks/useBanners";
 import { useNavigate } from "react-router-dom";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
-import romanticSlide1 from "@/assets/romantic-slide-1.jpg";
-import romanticSlide2 from "@/assets/romantic-slide-2.jpg";
-import romanticSlide3 from "@/assets/romantic-slide-3.jpg";
 
 const NetflixHero = () => {
   const navigate = useNavigate();
@@ -15,49 +13,18 @@ const NetflixHero = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const { data: categories = [] } = useCategories();
-  const { data: featuredProjects = [] } = useFeaturedProjects();
+  const { data: banners = [] } = useActiveBanners();
   
   const categoryTabs = ['All', ...categories.map(cat => cat.name)];
-  
-  const cinematicMovies = [
-    {
-      id: 1,
-      title: "The Perfect Match",
-      description: "When two hearts collide in the digital age, sparks fly in this modern romantic masterpiece.",
-      image: romanticSlide1,
-      matchPercentage: 97,
-      genre: "Romantic Drama",
-      year: 2024,
-      rating: "PG-13"
-    },
-    {
-      id: 2,
-      title: "Lovable Hearts",
-      description: "A tale of passion, dreams, and the courage to love against all odds.",
-      image: romanticSlide2,
-      matchPercentage: 94,
-      genre: "Romance",
-      year: 2024,
-      rating: "PG"
-    },
-    {
-      id: 3,
-      title: "Forever Yours",
-      description: "An epic love story that transcends time, space, and everything in between.",
-      image: romanticSlide3,
-      matchPercentage: 99,
-      genre: "Epic Romance",
-      year: 2024,
-      rating: "PG-13"
-    }
-  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % cinematicMovies.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [cinematicMovies.length]);
+    if (banners.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % banners.length);
+      }, 6000);
+      return () => clearInterval(interval);
+    }
+  }, [banners.length]);
 
   return (
     <>
@@ -82,76 +49,83 @@ const NetflixHero = () => {
 
       {/* Cinematic Netflix Hero Carousel */}
       <section className="relative min-h-screen pt-16 overflow-hidden">
-        <Carousel className="w-full h-full relative">
-          <CarouselContent className="-ml-0">
-            {cinematicMovies.map((movie, index) => (
-              <CarouselItem key={movie.id} className="pl-0 basis-full">
-                <Card className="border-0 rounded-none h-screen relative overflow-hidden">
-                  {/* Hero Background */}
-                  <div className="absolute inset-0">
-                    <img
-                      src={movie.image}
-                      alt={movie.title}
-                      className="w-full h-full object-cover object-center scale-105"
-                    />
-                    
-                    {/* Cinematic Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/30" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
-                    
-                    {/* Glossy overlay effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
-                  </div>
+        {banners.length > 0 ? (
+          <Carousel className="w-full h-full relative">
+            <CarouselContent className="-ml-0">
+              {banners.map((banner, index) => (
+                <CarouselItem key={banner.id} className="pl-0 basis-full">
+                  <Card className="border-0 rounded-none h-screen relative overflow-hidden">
+                    {/* Hero Background */}
+                    <div className="absolute inset-0">
+                      <img
+                        src={banner.image_url}
+                        alt={banner.title}
+                        className="w-full h-full object-cover object-center scale-105"
+                      />
+                      
+                      {/* Cinematic Overlays */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/30" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
+                      
+                      {/* Glossy overlay effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+                    </div>
 
-                  {/* Hero Content */}
-                  <div className="relative z-10 flex items-center justify-center min-h-screen px-4 md:px-16">
-                    <div className="max-w-4xl text-center space-y-8 animate-fade-in">
-                      {/* Netflix N Logo + Match Badge */}
-                      <div className="flex items-center justify-center space-x-4 mb-6">
-                        <div className="bg-netflix-red text-white px-4 py-2 rounded text-sm font-bold tracking-wider flex items-center gap-2">
-                          <Heart className="h-4 w-4 animate-pulse text-white" />
-                          N ORIGINALS
+                    {/* Hero Content */}
+                    <div className="relative z-10 flex items-center justify-center min-h-screen px-4 md:px-16">
+                      <div className="max-w-4xl text-center space-y-8 animate-fade-in">
+                        {/* Netflix N Logo + Match Badge */}
+                        <div className="flex items-center justify-center space-x-4 mb-6">
+                          <div className="bg-netflix-red text-white px-4 py-2 rounded text-sm font-bold tracking-wider flex items-center gap-2">
+                            <Heart className="h-4 w-4 animate-pulse text-white" />
+                            N ORIGINALS
+                          </div>
+                          <div className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                            {banner.match_percentage}% Match
+                          </div>
+                          <div className="text-white/80 text-sm font-medium">
+                            {banner.year} • {banner.rating} • {banner.genre}
+                          </div>
                         </div>
-                        <div className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                          {movie.matchPercentage}% Match
+
+                        {/* Cinematic Title with Elegant Serif Typography */}
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white leading-tight netflix-text-glow">
+                          {banner.title}
+                        </h1>
+
+                        {banner.subtitle && (
+                          <h2 className="text-3xl md:text-4xl text-white/90 font-light">
+                            {banner.subtitle}
+                          </h2>
+                        )}
+
+                        {/* Description */}
+                        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+                          {banner.description}
+                        </p>
+
+                        {/* Floating Hearts Animation */}
+                        <div className="absolute top-1/4 left-1/4 animate-bounce opacity-30">
+                          <Heart className="h-8 w-8 text-netflix-red fill-netflix-red" />
                         </div>
-                        <div className="text-white/80 text-sm font-medium">
-                          {movie.year} • {movie.rating} • {movie.genre}
+                        <div className="absolute top-1/3 right-1/4 animate-pulse opacity-20" style={{ animationDelay: '1s' }}>
+                          <Heart className="h-6 w-6 text-pink-400 fill-pink-400" />
                         </div>
-                      </div>
+                        <div className="absolute bottom-1/4 left-1/3 animate-bounce opacity-25" style={{ animationDelay: '2s' }}>
+                          <Heart className="h-10 w-10 text-red-400 fill-red-400" />
+                        </div>
 
-                      {/* Cinematic Title with Elegant Serif Typography */}
-                      <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white leading-tight netflix-text-glow">
-                        {movie.title}
-                      </h1>
-
-                      {/* Description */}
-                      <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
-                        {movie.description}
-                      </p>
-
-                      {/* Floating Hearts Animation */}
-                      <div className="absolute top-1/4 left-1/4 animate-bounce opacity-30">
-                        <Heart className="h-8 w-8 text-netflix-red fill-netflix-red" />
-                      </div>
-                      <div className="absolute top-1/3 right-1/4 animate-pulse opacity-20" style={{ animationDelay: '1s' }}>
-                        <Heart className="h-6 w-6 text-pink-400 fill-pink-400" />
-                      </div>
-                      <div className="absolute bottom-1/4 left-1/3 animate-bounce opacity-25" style={{ animationDelay: '2s' }}>
-                        <Heart className="h-10 w-10 text-red-400 fill-red-400" />
-                      </div>
-
-                      {/* Action Buttons - Cinematic Style */}
-                      <div className="flex items-center justify-center space-x-6 pt-8">
-                        <Button 
-                          size="lg" 
-                          className="bg-white text-black hover:bg-white/90 text-xl px-12 py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
-                          onClick={() => navigate('/about')}
-                        >
-                          <Play className="mr-4 h-7 w-7" fill="currentColor" />
-                          Play
-                        </Button>
+                        {/* Action Buttons - Cinematic Style */}
+                        <div className="flex items-center justify-center space-x-6 pt-8">
+                          <Button 
+                            size="lg" 
+                            className="bg-white text-black hover:bg-white/90 text-xl px-12 py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                            onClick={() => navigate('/about')}
+                          >
+                            <Play className="mr-4 h-7 w-7" fill="currentColor" />
+                            Play
+                          </Button>
                         
                         <Button 
                           size="lg" 
@@ -182,7 +156,7 @@ const NetflixHero = () => {
           
           {/* Slide Indicators */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
-            {cinematicMovies.map((_, index) => (
+            {banners.map((_, index) => (
               <button
                 key={index}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -193,6 +167,11 @@ const NetflixHero = () => {
             ))}
           </div>
         </Carousel>
+        ) : (
+          <div className="flex items-center justify-center min-h-screen">
+            <p className="text-white text-xl">No active banners. Please add some in the admin panel.</p>
+          </div>
+        )}
 
         {/* Audio Control */}
         <div className="absolute bottom-8 right-8 z-20">

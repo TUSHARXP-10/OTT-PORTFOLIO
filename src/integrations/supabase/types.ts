@@ -62,6 +62,54 @@ export type Database = {
         }
         Relationships: []
       }
+      banners: {
+        Row: {
+          created_at: string
+          description: string
+          display_order: number
+          genre: string | null
+          id: string
+          image_url: string
+          is_active: boolean
+          match_percentage: number | null
+          rating: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+          year: number | null
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          display_order?: number
+          genre?: string | null
+          id?: string
+          image_url: string
+          is_active?: boolean
+          match_percentage?: number | null
+          rating?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+          year?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          display_order?: number
+          genre?: string | null
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          match_percentage?: number | null
+          rating?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+          year?: number | null
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string

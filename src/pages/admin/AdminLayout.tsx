@@ -8,7 +8,8 @@ import {
   LogOut,
   Home,
   BarChart3,
-  Layout as LayoutIcon
+  Layout as LayoutIcon,
+  Image as ImageIcon
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -29,6 +30,7 @@ const AdminLayout = () => {
     { to: '/admin', icon: BarChart3, label: 'Dashboard', exact: true },
     { to: '/admin/projects', icon: FolderOpen, label: 'Projects' },
     { to: '/admin/categories', icon: LayoutIcon, label: 'Categories' },
+    { to: '/admin/banners', icon: ImageIcon, label: 'Hero Banners' },
     { to: '/admin/about', icon: User, label: 'About' },
     { to: '/admin/settings', icon: Settings, label: 'Settings' },
   ];
