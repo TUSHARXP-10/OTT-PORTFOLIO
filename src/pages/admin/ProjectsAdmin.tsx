@@ -27,6 +27,7 @@ const projectSchema = z.object({
   github_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
   vercel_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
   featured: z.boolean(),
+  in_my_list: z.boolean(),
   tags: z.string(),
 });
 
@@ -51,6 +52,7 @@ const ProjectsAdmin = () => {
       github_url: '',
       vercel_url: '',
       featured: false,
+      in_my_list: false,
       tags: '',
     },
   });
@@ -67,6 +69,7 @@ const ProjectsAdmin = () => {
         github_url: project.github_url || '',
         vercel_url: project.vercel_url || '',
         featured: project.featured,
+        in_my_list: project.in_my_list || false,
         tags: project.tags?.join(', ') || '',
       });
     } else {
@@ -92,6 +95,7 @@ const ProjectsAdmin = () => {
       category_id: data.category_id || null,
       status: data.status || 'In Progress',
       featured: data.featured || false,
+      in_my_list: data.in_my_list || false,
       github_url: data.github_url || null,
       vercel_url: data.vercel_url || null,
       tags: data.tags ? data.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
@@ -338,6 +342,27 @@ const ProjectsAdmin = () => {
                         <FormLabel className="text-netflix-text-primary">Featured Project</FormLabel>
                         <div className="text-sm text-netflix-text-secondary">
                           Show this project in featured sections
+                        </div>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="in_my_list"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-netflix-gray p-4">
+                      <div className="space-y-0.5">
+                        <FormLabel className="text-netflix-text-primary">Add to My List</FormLabel>
+                        <div className="text-sm text-netflix-text-secondary">
+                          Show this project in "My List" section
                         </div>
                       </div>
                       <FormControl>

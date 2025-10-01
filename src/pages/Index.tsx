@@ -3,13 +3,14 @@ import NetflixHero from "@/components/NetflixHero";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import NetflixBottomNav from "@/components/NetflixBottomNav";
 import { Button } from "@/components/ui/button";
-import { useCategories, useProjectsByCategory, useProjects } from "@/hooks/useProjects";
+import { useCategories, useProjectsByCategory, useProjects, useMyListProjects } from "@/hooks/useProjects";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 const Index = () => {
   const { data: categories = [] } = useCategories();
   const { data: allProjects = [] } = useProjects();
+  const { data: myListProjects = [] } = useMyListProjects();
   const { user, isAdmin } = useAuth();
   
   // Get projects by category name for dynamic carousels
@@ -92,6 +93,14 @@ const Index = () => {
             ))}
           </div>
         </div>
+
+        {/* My List Section */}
+        {myListProjects.length > 0 && (
+          <ProjectCarousel
+            title="📌 My List"
+            projects={myListProjects}
+          />
+        )}
 
         {/* Netflix-Style Project Rows */}
         {allProjects.length > 0 && (

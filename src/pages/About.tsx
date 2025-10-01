@@ -2,34 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin, Phone, Mail, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useAbout } from "@/hooks/useAbout";
 
 const About = () => {
   const navigate = useNavigate();
+  const { data: about, isLoading } = useAbout();
 
-  const timelineData = [
-    {
-      period: "2024 – Present",
-      title: "Freelance Full-Stack Developer", 
-      description: "Building custom web applications and providing technical consulting"
-    },
-    {
-      period: "2021 – 2023",
-      title: "Self-Taught Developer Journey",
-      description: "Mastered full-stack development through hands-on projects"
-    },
-    {
-      period: "Ongoing",
-      title: "Cybersecurity & Penetration Testing Expert",
-      description: "Specialized in security audits and vulnerability assessments"
-    }
-  ];
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-netflix-black flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
-  const skillsData = {
-    "Frontend Development": ["React", "TypeScript", "Next.js", "Tailwind CSS", "React Three Fiber", "Framer Motion"],
-    "Backend Development": ["Node.js", "Express.js", "GraphQL", "REST API", "MongoDB", "PostgreSQL"],
-    "DevOps & Cloud": ["Docker", "Vercel", "GitHub Actions", "AWS", "CI/CD"],
-    "Cybersecurity": ["Penetration Testing", "Burp Suite", "Kali Linux", "Security Audits"]
-  };
+  const timelineData = about?.timeline || [];
+  const skillsData = about?.skills || {};
 
   return (
     <div className="min-h-screen bg-netflix-black text-white">
@@ -48,13 +36,21 @@ const About = () => {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <div className="relative inline-block mb-6">
-              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-netflix-red to-red-600 rounded-full flex items-center justify-center text-4xl font-bold shadow-2xl">
-                TC
-              </div>
+              {about?.avatar ? (
+                <img 
+                  src={about.avatar} 
+                  alt={about.name}
+                  className="w-32 h-32 mx-auto rounded-full object-cover shadow-2xl border-4 border-netflix-red/30"
+                />
+              ) : (
+                <div className="w-32 h-32 mx-auto bg-gradient-to-br from-netflix-red to-red-600 rounded-full flex items-center justify-center text-4xl font-bold shadow-2xl">
+                  {about?.name?.split(' ').map(n => n[0]).join('') || 'TC'}
+                </div>
+              )}
             </div>
             
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4 netflix-text-glow">
-              Tushar R. Chandane
+              {about?.name || 'Your Name'}
             </h1>
             
             <p className="text-xl md:text-2xl text-netflix-red font-medium mb-6">
@@ -62,102 +58,113 @@ const About = () => {
             </p>
             
             <p className="text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-8">
-              I craft scalable digital experiences that transform your business vision into powerful, 
-              secure web applications. Let's build something amazing together.
+              {about?.bio || 'Add your bio in the admin panel'}
             </p>
 
             {/* Contact Info */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/80 mb-6">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-netflix-red" />
-                <span>Mumbai, India</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-netflix-red" />
-                <span>+91 9082301827</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-netflix-red" />
-                <span>tusharchandane8@gmail.com</span>
-              </div>
+              {about?.location && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-netflix-red" />
+                  <span>{about.location}</span>
+                </div>
+              )}
+              {about?.phone && (
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-netflix-red" />
+                  <span>{about.phone}</span>
+                </div>
+              )}
+              {about?.email && (
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-netflix-red" />
+                  <span>{about.email}</span>
+                </div>
+              )}
             </div>
 
-            <div className="inline-block bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold">
-              Available for freelance projects
-            </div>
+            {about?.status && (
+              <div className="inline-block bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold">
+                {about.status}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Bio Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-7xl mx-auto">
-          <Card className="bg-white/5 border-white/10 p-8 backdrop-blur-sm">
-            <h2 className="text-3xl font-bold mb-6 text-center">About Me</h2>
-            <p className="text-lg text-white/90 leading-relaxed text-center">
-              I'm a passionate self-taught Full-Stack Developer and Cybersecurity Expert based in Mumbai, India. 
-              Since 2021, I've been dedicated to building secure, innovative digital experiences that help businesses 
-              grow and succeed in the digital landscape.
-            </p>
-          </Card>
-        </div>
-      </section>
+      {about?.bio && (
+        <section className="px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-7xl mx-auto">
+            <Card className="bg-white/5 border-white/10 p-8 backdrop-blur-sm">
+              <h2 className="text-3xl font-bold mb-6 text-center">About Me</h2>
+              <p className="text-lg text-white/90 leading-relaxed text-center">
+                {about.bio}
+              </p>
+            </Card>
+          </div>
+        </section>
+      )}
 
       {/* Timeline */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Experience Timeline</h2>
-          <div className="space-y-8">
-            {timelineData.map((item, index) => (
-              <Card key={index} className="bg-white/5 border-white/10 p-6 backdrop-blur-sm">
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="text-netflix-red font-semibold text-sm whitespace-nowrap">
-                    {item.period}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-white/80">{item.description}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Expertise */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Technical Expertise</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(skillsData).map(([category, technologies]) => {
-              const icons = {
-                "Frontend Development": "🎨",
-                "Backend Development": "⚙️", 
-                "DevOps & Cloud": "🚀",
-                "Cybersecurity": "🔒"
-              };
-              
-              return (
-                <Card key={category} className="bg-white/5 border-white/10 p-6 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                  <div className="text-3xl mb-4">{icons[category as keyof typeof icons]}</div>
-                  <h3 className="text-xl font-semibold mb-4">{category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {technologies.map((tech) => (
-                      <span 
-                        key={tech}
-                        className="px-3 py-1 text-xs bg-netflix-red/20 text-netflix-red rounded-full border border-netflix-red/30"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+      {timelineData.length > 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Experience Timeline</h2>
+            <div className="space-y-8">
+              {timelineData.map((item: any, index: number) => (
+                <Card key={index} className="bg-white/5 border-white/10 p-6 backdrop-blur-sm">
+                  <div className="flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="text-netflix-red font-semibold text-sm whitespace-nowrap">
+                      {item.period}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                      <p className="text-white/80">{item.description}</p>
+                    </div>
                   </div>
                 </Card>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Technical Expertise */}
+      {Object.keys(skillsData).length > 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Technical Expertise</h2>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {Object.entries(skillsData).map(([category, technologies]: [string, any]) => {
+                const icons: Record<string, string> = {
+                  "Frontend Development": "🎨",
+                  "Backend Development": "⚙️", 
+                  "DevOps & Cloud": "🚀",
+                  "Cybersecurity": "🔒"
+                };
+                
+                return (
+                  <Card key={category} className="bg-white/5 border-white/10 p-6 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+                    <div className="text-3xl mb-4">{icons[category] || "💻"}</div>
+                    <h3 className="text-xl font-semibold mb-4">{category}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {Array.isArray(technologies) && technologies.map((tech: string) => (
+                        <span 
+                          key={tech}
+                          className="px-3 py-1 text-xs bg-netflix-red/20 text-netflix-red rounded-full border border-netflix-red/30"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Call to Action */}
       <section className="px-4 sm:px-6 lg:px-8 py-16">

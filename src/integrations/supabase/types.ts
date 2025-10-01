@@ -179,6 +179,7 @@ export type Database = {
           github_url: string | null
           id: string
           image: string
+          in_my_list: boolean
           status: string
           tags: string[] | null
           title: string
@@ -193,6 +194,7 @@ export type Database = {
           github_url?: string | null
           id?: string
           image: string
+          in_my_list?: boolean
           status?: string
           tags?: string[] | null
           title: string
@@ -207,6 +209,7 @@ export type Database = {
           github_url?: string | null
           id?: string
           image?: string
+          in_my_list?: boolean
           status?: string
           tags?: string[] | null
           title?: string

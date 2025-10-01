@@ -11,6 +11,7 @@ export interface Project {
   vercel_url?: string;
   status: string;
   featured: boolean;
+  in_my_list: boolean;
   category_id: string;
   categories?: {
     name: string;
@@ -117,6 +118,27 @@ export const useFeaturedProjects = () => {
           )
         `)
         .eq('featured', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data as Project[];
+    },
+  });
+};
+
+export const useMyListProjects = () => {
+  return useQuery({
+    queryKey: ['my-list-projects'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select(`
+          *,
+          categories (
+            name
+          )
+        `)
+        .eq('in_my_list', true)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
