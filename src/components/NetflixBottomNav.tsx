@@ -17,45 +17,53 @@ const NetflixBottomNav = () => {
     }
   };
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-netflix-black border-t border-gray-800 px-4 py-2">
-      <div className="flex items-center justify-around">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-netflix-black/95 backdrop-blur-xl border-t border-white/10 px-4 py-3 lg:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.8)]">
+      <div className="flex items-center justify-around max-w-md mx-auto">
         <Button 
           variant="ghost" 
-          className="flex flex-col items-center space-y-1 text-white hover:text-gray-300"
-          onClick={() => navigate('/portfolio')}
+          className="flex flex-col items-center space-y-1 text-white hover:text-netflix-red transition-colors group"
+          onClick={() => {
+            navigate('/portfolio');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
         >
-          <Home className="h-5 w-5" />
-          <span className="text-xs">Home</span>
+          <Home className="h-6 w-6 group-hover:scale-110 transition-transform" />
+          <span className="text-xs font-medium">Home</span>
         </Button>
         
         <Button 
           variant="ghost" 
-          className="flex flex-col items-center space-y-1 text-gray-400 hover:text-gray-300"
-          onClick={() => navigate('/portfolio#trending')}
+          className="flex flex-col items-center space-y-1 text-netflix-text-secondary hover:text-white transition-colors group"
+          onClick={() => {
+            navigate('/portfolio');
+            setTimeout(() => {
+              document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
         >
-          <TrendingUp className="h-5 w-5" />
-          <span className="text-xs">New & Hot</span>
+          <TrendingUp className="h-6 w-6 group-hover:scale-110 transition-transform" />
+          <span className="text-xs font-medium">Projects</span>
         </Button>
         
         <Button 
           variant="ghost" 
-          className="flex flex-col items-center space-y-1 text-gray-400 hover:text-gray-300"
+          className="flex flex-col items-center space-y-1 text-netflix-text-secondary hover:text-white transition-colors group"
           onClick={() => navigate('/')}
         >
           {selectedProfile ? (
-            <div className={`w-6 h-6 ${getProfileColor(selectedProfile)} rounded flex items-center justify-center`}>
+            <div className={`w-7 h-7 ${getProfileColor(selectedProfile)} rounded-sm flex items-center justify-center shadow-md group-hover:scale-110 transition-transform border-2 border-transparent group-hover:border-white/50`}>
               <div className="text-black text-xs">
                 <div className="flex gap-1 mb-0.5">
                   <div className="w-1 h-1 bg-black rounded-full"></div>
                   <div className="w-1 h-1 bg-black rounded-full"></div>
                 </div>
-                <div className="w-2 h-1 border border-black border-t-0 rounded-b-sm"></div>
+                <div className="w-2 h-1 border border-black border-t-0 rounded-b-sm mx-auto"></div>
               </div>
             </div>
           ) : (
-            <User className="h-5 w-5" />
+            <User className="h-6 w-6 group-hover:scale-110 transition-transform" />
           )}
-          <span className="text-xs capitalize">{selectedProfile || 'Profile'}</span>
+          <span className="text-xs capitalize font-medium">{selectedProfile || 'Profile'}</span>
         </Button>
       </div>
     </div>
