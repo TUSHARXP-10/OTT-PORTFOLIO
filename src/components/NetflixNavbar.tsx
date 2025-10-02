@@ -100,24 +100,45 @@ const NetflixNavbar = () => {
           {/* Navigation Menu */}
           <div className="hidden md:flex items-center space-x-6">
             <button 
-              onClick={() => navigate('/portfolio')}
+              onClick={() => {
+                navigate('/portfolio');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="text-white hover:text-netflix-text-secondary transition-colors text-sm font-medium"
             >
               Home
             </button>
             <button 
-              onClick={() => navigate('/portfolio#projects')}
+              onClick={() => {
+                navigate('/portfolio');
+                setTimeout(() => {
+                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
               className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
             >
               Projects
             </button>
             <button 
-              onClick={() => navigate('/portfolio#about')}
+              onClick={() => {
+                navigate('/portfolio');
+                setTimeout(() => {
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
               className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
             >
               About
             </button>
-            <button className="text-netflix-text-secondary hover:text-white transition-colors text-sm">
+            <button 
+              onClick={() => {
+                navigate('/portfolio');
+                setTimeout(() => {
+                  document.getElementById('my-list')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
+            >
               My List
             </button>
           </div>

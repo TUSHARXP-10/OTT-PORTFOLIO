@@ -2,6 +2,7 @@ import NetflixNavbar from "@/components/NetflixNavbar";
 import NetflixHero from "@/components/NetflixHero";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import NetflixBottomNav from "@/components/NetflixBottomNav";
+import AboutSectionPortfolio from "@/components/AboutSectionPortfolio";
 import { Button } from "@/components/ui/button";
 import { useCategories, useProjectsByCategory, useProjects, useMyListProjects } from "@/hooks/useProjects";
 import { useAuth } from "@/contexts/AuthContext";
@@ -95,15 +96,19 @@ const Index = () => {
         </div>
 
         {/* My List Section */}
-        {myListProjects.length > 0 && (
-          <ProjectCarousel
-            title="📌 My List"
-            projects={myListProjects}
-          />
-        )}
+        <div id="my-list" className="scroll-mt-20">
+          {myListProjects.length > 0 && (
+            <ProjectCarousel
+              title="📌 My List"
+              projects={myListProjects}
+            />
+          )}
+        </div>
 
-        {/* Netflix-Style Project Rows */}
-        {allProjects.length > 0 && (
+        {/* Projects Section */}
+        <div id="projects" className="scroll-mt-20">
+          {/* Netflix-Style Project Rows */}
+          {allProjects.length > 0 && (
           <ProjectCarousel
             title="🔥 Trending Now"
             projects={allProjects.filter(p => p.featured).concat(allProjects.filter(p => !p.featured)).slice(0, 8)}
@@ -137,6 +142,10 @@ const Index = () => {
             projects={allProjects.slice(-6)}
           />
         )}
+        </div>
+
+        {/* About Section */}
+        <AboutSectionPortfolio />
         
         {/* Empty State */}
         {allProjects.length === 0 && (
