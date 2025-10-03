@@ -28,7 +28,7 @@ const Index = () => {
       <NetflixHero />
       
       {/* Content Sections */}
-      <div className="relative z-10 -mt-32 lg:-mt-48">
+      <div className="relative z-10 -mt-24 lg:-mt-32">
         <div className="space-y-8 lg:space-y-12 animate-fade-in">
         {/* Netflix Stats Section - Compact Cards */}
         <div className="px-4 lg:px-12">

@@ -29,12 +29,12 @@ const NetflixHero = () => {
   return (
     <>
       {/* Netflix-Style Category Pills */}
-      <div className="fixed top-16 z-40 w-full bg-gradient-to-b from-netflix-black to-transparent px-4 py-4">
-        <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide">
+      <div className="fixed top-16 z-40 w-full bg-gradient-to-b from-netflix-black via-netflix-black/90 to-transparent px-4 lg:px-12 py-4">
+        <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide pb-2">
           {categoryTabs.map((category) => (
             <button
               key={category}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+              className={`rounded-full px-4 lg:px-5 py-1.5 lg:py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 selectedCategory === category
                   ? 'bg-white text-black shadow-lg'
                   : 'bg-black/40 text-white border border-white/30 hover:bg-white/10 backdrop-blur-sm'

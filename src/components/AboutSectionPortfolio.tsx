@@ -15,9 +15,9 @@ const AboutSectionPortfolio = () => {
   };
 
   return (
-    <section id="about" className="relative scroll-mt-20 mb-16">
+    <section id="about" className="relative scroll-mt-24 pt-8 mb-16">
       {/* Netflix-style Hero Banner for About */}
-      <div className="relative h-[70vh] lg:h-[80vh]">
+      <div className="relative h-auto min-h-[60vh] lg:min-h-[70vh]">
         {/* Background with gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-netflix-black via-netflix-black/60 to-transparent z-10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-netflix-black via-transparent to-transparent z-10"></div>
@@ -31,7 +31,7 @@ const AboutSectionPortfolio = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-20 h-full flex items-end px-4 lg:px-12 pb-24 lg:pb-32">
+        <div className="relative z-20 h-full flex items-center px-4 lg:px-12 py-16 lg:py-24">
           <div className="max-w-3xl animate-fade-in">
             {/* Profile Image */}
             {about.avatar && (
