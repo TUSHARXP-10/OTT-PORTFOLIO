@@ -121,10 +121,15 @@ const NetflixNavbar = () => {
             </button>
             <button 
               onClick={() => {
-                navigate('/portfolio');
-                setTimeout(() => {
-                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+                const aboutSection = document.getElementById('about');
+                if (window.location.pathname === '/portfolio' && aboutSection) {
+                  aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                  navigate('/portfolio');
+                  setTimeout(() => {
+                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 300);
+                }
               }}
               className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
             >

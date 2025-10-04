@@ -15,7 +15,7 @@ const AboutSectionPortfolio = () => {
   };
 
   return (
-    <section id="about" className="relative scroll-mt-24 py-16 px-4 lg:px-12">
+    <section id="about" className="relative scroll-mt-32 py-16 px-4 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Two Column Layout */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
