@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import About from "./pages/About";
 import ProfileSelection from "./pages/ProfileSelection";
+import NetflixIntro from "./components/NetflixIntro";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import ProjectsAdmin from "./pages/admin/ProjectsAdmin";
@@ -31,7 +32,8 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ProfileSelection />} />
+            <Route path="/" element={<NetflixIntro />} />
+            <Route path="/profile-selection" element={<ProfileSelection />} />
             <Route path="/portfolio" element={<Index />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
             <Route path="/about" element={<About />} />
