@@ -5,14 +5,27 @@ import { Button } from "./ui/button";
 const AboutSectionPortfolio = () => {
   const { data: about } = useAbout();
 
-  if (!about) return null;
-
   const skillIcons: Record<string, any> = {
     "Frontend Development": Code2,
     "Backend Development": Rocket,
     "DevOps & Cloud": Cloud,
     "Cybersecurity": Shield,
   };
+
+  // Always render the section wrapper so the ID exists for navigation
+  if (!about) {
+    return (
+      <section id="about" className="relative scroll-mt-32 py-16 px-4 lg:px-12">
+        <div className="max-w-7xl mx-auto text-center py-16">
+          <div className="text-6xl mb-6 animate-float">👤</div>
+          <h2 className="text-3xl font-bold text-white mb-4">About Section</h2>
+          <p className="text-netflix-text-secondary mb-8">
+            Add your information in the Admin Panel to display your profile here.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="about" className="relative scroll-mt-32 py-16 px-4 lg:px-12">
