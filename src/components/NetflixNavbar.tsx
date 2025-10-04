@@ -121,14 +121,29 @@ const NetflixNavbar = () => {
             </button>
             <button 
               onClick={() => {
-                const aboutSection = document.getElementById('about');
-                if (window.location.pathname === '/portfolio' && aboutSection) {
-                  aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
+                console.log('About button clicked');
+                if (window.location.pathname !== '/portfolio') {
+                  console.log('Navigating to /portfolio first');
                   navigate('/portfolio');
                   setTimeout(() => {
-                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }, 300);
+                    const aboutSection = document.getElementById('about');
+                    console.log('About section found:', aboutSection);
+                    if (aboutSection) {
+                      const offset = 80; // navbar height
+                      const elementPosition = aboutSection.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - offset;
+                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                  }, 500);
+                } else {
+                  const aboutSection = document.getElementById('about');
+                  console.log('About section found:', aboutSection);
+                  if (aboutSection) {
+                    const offset = 80; // navbar height
+                    const elementPosition = aboutSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                  }
                 }
               }}
               className="text-netflix-text-secondary hover:text-white transition-colors text-sm"
