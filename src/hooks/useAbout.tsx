@@ -25,15 +25,22 @@ export const useAbout = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('about')
-        .select('*')
-        .single();
+        .select('*');
 
       if (error) throw error;
+      
+      // If no records exist, return null
+      if (!data || data.length === 0) {
+        return null;
+      }
+      
+      // Return the first record
+      const aboutData = data[0];
       return {
-        ...data,
-        timeline: data.timeline as About['timeline'],
-        skills: data.skills as About['skills'],
-        social_links: data.social_links as About['social_links']
+        ...aboutData,
+        timeline: aboutData.timeline as About['timeline'],
+        skills: aboutData.skills as About['skills'],
+        social_links: aboutData.social_links as About['social_links']
       };
     },
   });

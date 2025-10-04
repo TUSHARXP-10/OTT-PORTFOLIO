@@ -1,4 +1,4 @@
-import { Search, Cast, User, X, Bell, ArrowLeft } from 'lucide-react';
+import { Search, Cast, User, X, Bell, ArrowLeft, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAbout } from '@/hooks/useAbout';
@@ -15,6 +15,7 @@ const NetflixNavbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
@@ -76,7 +77,7 @@ const NetflixNavbar = () => {
     }`}>
       <div className="flex items-center justify-between">
         {/* Left - Netflix Logo + Navigation */}
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-4 sm:space-x-8">
           {/* Back to Profile Selection */}
           <Button
             variant="ghost"
@@ -92,10 +93,20 @@ const NetflixNavbar = () => {
             <div className="bg-netflix-red text-white px-2 py-1 font-black text-xl tracking-tight">
               N
             </div>
-            <h1 className="text-xl font-medium text-white hidden sm:block">
+            <h1 className="text-lg sm:text-xl font-medium text-white hidden sm:block">
               {about?.name || 'Portfolio'} {selectedProfile && `• ${selectedProfile}`}
             </h1>
           </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-white hover:text-netflix-text-secondary transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
 
           {/* Navigation Menu */}
           <div className="hidden md:flex items-center space-x-6">
@@ -269,6 +280,54 @@ const NetflixNavbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-16 bg-black/95 backdrop-blur-sm z-40">
+          <div className="flex flex-col p-4 space-y-4">
+            <Button
+              variant="ghost"
+              className="justify-start text-white hover:text-netflix-text-secondary hover:bg-white/10"
+              onClick={() => {
+                navigate('/');
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-white hover:text-netflix-text-secondary hover:bg-white/10"
+              onClick={() => {
+                navigate('/projects');
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              Projects
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-white hover:text-netflix-text-secondary hover:bg-white/10"
+              onClick={() => {
+                navigate('/about');
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              About
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-white hover:text-netflix-text-secondary hover:bg-white/10"
+              onClick={() => {
+                navigate('/my-list');
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              My List
+            </Button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

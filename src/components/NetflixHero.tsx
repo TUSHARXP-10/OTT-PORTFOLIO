@@ -29,12 +29,12 @@ const NetflixHero = () => {
   return (
     <>
       {/* Netflix-Style Category Pills */}
-      <div className="fixed top-16 z-40 w-full bg-gradient-to-b from-netflix-black via-netflix-black/90 to-transparent px-4 lg:px-12 py-4">
-        <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide pb-2">
-          {categoryTabs.map((category) => (
+      <div className="fixed top-16 z-40 w-full bg-gradient-to-b from-netflix-black via-netflix-black/90 to-transparent px-2 sm:px-4 lg:px-12 py-2 sm:py-3 md:py-4">
+        <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto scrollbar-hide pb-1">
+          {categoryTabs.slice(0, 8).map((category) => (
             <button
               key={category}
-              className={`rounded-full px-4 lg:px-5 py-1.5 lg:py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+              className={`rounded-full px-3 sm:px-4 lg:px-5 py-1 sm:py-1.5 lg:py-2 text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 selectedCategory === category
                   ? 'bg-white text-black shadow-lg'
                   : 'bg-black/40 text-white border border-white/30 hover:bg-white/10 backdrop-blur-sm'
@@ -42,7 +42,7 @@ const NetflixHero = () => {
               onClick={() => setSelectedCategory(category)}
             >
               {category}
-            </button>
+              </button>
           ))}
         </div>
       </div>
@@ -90,20 +90,20 @@ const NetflixHero = () => {
                         </div>
 
                         {/* Cinematic Title with Elegant Serif Typography */}
-                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white leading-tight netflix-text-glow">
-                          {banner.title}
-                        </h1>
+                      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-serif font-bold text-white leading-tight netflix-text-glow">
+                        {banner.title}
+                      </h1>
 
-                        {banner.subtitle && (
-                          <h2 className="text-3xl md:text-4xl text-white/90 font-light">
-                            {banner.subtitle}
-                          </h2>
-                        )}
+                      {banner.subtitle && (
+                        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white/90 font-light">
+                          {banner.subtitle}
+                        </h2>
+                      )}
 
-                        {/* Description */}
-                        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
-                          {banner.description}
-                        </p>
+                      {/* Description */}
+                      <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light px-4">
+                        {banner.description}
+                      </p>
 
                         {/* Floating Hearts Animation */}
                         <div className="absolute top-1/4 left-1/4 animate-bounce opacity-30">
@@ -117,29 +117,29 @@ const NetflixHero = () => {
                         </div>
 
                         {/* Action Buttons - Cinematic Style */}
-                        <div className="flex items-center justify-center space-x-6 pt-8">
+                        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6 pt-6 md:pt-8">
                           <Button 
                             size="lg" 
-                            className="bg-white text-black hover:bg-white/90 text-xl px-12 py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                            className="bg-white text-black hover:bg-white/90 text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 h-auto font-bold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                             onClick={() => navigate('/about')}
                           >
-                            <Play className="mr-4 h-7 w-7" fill="currentColor" />
+                            <Play className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 md:h-7 w-5 sm:w-6 md:w-7" fill="currentColor" />
                             Play
                           </Button>
                         
                         <Button 
                           size="lg" 
-                          className="bg-white/20 text-white border-2 border-white/50 hover:bg-white/30 text-xl px-10 py-4 h-auto font-semibold rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                          className="bg-white/20 text-white border-2 border-white/50 hover:bg-white/30 text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 h-auto font-semibold rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                         >
-                          <Info className="mr-4 h-6 w-6" />
+                          <Info className="mr-2 sm:mr-3 md:mr-4 h-5 sm:h-6 md:h-6 w-5 sm:w-6 md:w-6" />
                           More Info
                         </Button>
 
                         <Button 
                           size="lg" 
-                          className="bg-transparent border-2 border-netflix-red text-netflix-red hover:bg-netflix-red hover:text-white text-xl px-8 py-4 h-auto font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                          className="bg-transparent border-2 border-netflix-red text-netflix-red hover:bg-netflix-red hover:text-white text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-8 py-3 sm:py-4 h-auto font-semibold rounded-lg transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                         >
-                          <Plus className="mr-3 h-6 w-6" />
+                          <Plus className="mr-2 sm:mr-3 md:mr-3 h-5 sm:h-6 md:h-6 w-5 sm:w-6 md:w-6" />
                           My List
                         </Button>
                       </div>

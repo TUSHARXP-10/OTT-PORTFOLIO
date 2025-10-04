@@ -42,14 +42,14 @@ const AboutSectionPortfolio = () => {
                   <img
                     src={about.avatar}
                     alt={about.name}
-                    className="w-64 h-64 object-cover rounded-lg border-4 border-white/10"
+                    className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 object-cover rounded-lg border-4 border-white/10"
                   />
                 </div>
               )}
 
               {/* Bio */}
               {about.bio && (
-                <p className="text-base text-netflix-text-primary leading-relaxed">
+                <p className="text-sm sm:text-base text-netflix-text-primary leading-relaxed">
                   {about.bio}
                 </p>
               )}
@@ -92,7 +92,7 @@ const AboutSectionPortfolio = () => {
           <div className="space-y-6">
             {about.timeline && about.timeline.length > 0 && (
               <>
-                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400 mb-8">
+                <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400 mb-6 sm:mb-8">
                   Experience Timeline
                 </h2>
                 <div className="relative space-y-8">
@@ -106,13 +106,13 @@ const AboutSectionPortfolio = () => {
                       
                       {/* Content */}
                       <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-white">
+                        <h3 className="text-lg sm:text-xl font-bold text-white">
                           {item.title}
                         </h3>
-                        <div className="inline-block px-3 py-1 bg-netflix-red/20 text-netflix-red text-sm font-bold rounded-sm border border-netflix-red/30">
+                        <div className="inline-block px-2 sm:px-3 py-1 bg-netflix-red/20 text-netflix-red text-xs sm:text-sm font-bold rounded-sm border border-netflix-red/30">
                           {item.period}
                         </div>
-                        <p className="text-netflix-text-secondary leading-relaxed mt-3">
+                        <p className="text-netflix-text-secondary leading-relaxed mt-3 text-sm sm:text-base">
                           {item.description}
                         </p>
                       </div>
@@ -127,7 +127,7 @@ const AboutSectionPortfolio = () => {
         {/* Skills Section - Full Width Below */}
         {about.skills && Object.keys(about.skills).length > 0 && (
           <div className="mt-16 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <h2 className="text-2xl lg:text-3xl font-semibold text-white mb-8">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white mb-6 sm:mb-8">
               Technical Expertise
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
@@ -143,21 +143,21 @@ const AboutSectionPortfolio = () => {
                     
                     <div className="relative z-10">
                       {/* Icon and Title */}
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="p-3 bg-netflix-red/20 rounded-lg group-hover:bg-netflix-red/30 transition-colors">
-                          <Icon className="h-6 w-6 text-netflix-red" />
+                      <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <div className="p-2 sm:p-3 bg-netflix-red/20 rounded-lg group-hover:bg-netflix-red/30 transition-colors">
+                          <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-netflix-red" />
                         </div>
-                        <h3 className="text-xl font-semibold text-white group-hover:text-netflix-red transition-colors">
+                        <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-netflix-red transition-colors">
                           {category}
                         </h3>
                       </div>
 
                       {/* Technologies Grid */}
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
                         {(technologies as string[]).map((tech, idx) => (
                           <span
                             key={idx}
-                            className="text-xs px-3 py-1.5 bg-white/10 text-netflix-text-secondary rounded-sm hover:bg-netflix-red/20 hover:text-white hover:border-netflix-red/50 transition-all cursor-default border border-white/5 font-medium"
+                            className="text-xs px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 text-netflix-text-secondary rounded-sm hover:bg-netflix-red/20 hover:text-white hover:border-netflix-red/50 transition-all cursor-default border border-white/5 font-medium"
                           >
                             {tech}
                           </span>
@@ -179,13 +179,13 @@ const AboutSectionPortfolio = () => {
         )}
 
         {/* Call to Action */}
-        <div className="mt-16 animate-fade-in netflix-card bg-gradient-to-r from-netflix-red/20 via-netflix-red/10 to-transparent p-12 lg:p-16 border border-netflix-red/30 relative overflow-hidden" style={{ animationDelay: '0.4s' }}>
+        <div className="mt-16 animate-fade-in netflix-card bg-gradient-to-r from-netflix-red/20 via-netflix-red/10 to-transparent p-6 sm:p-8 lg:p-12 xl:p-16 border border-netflix-red/30 relative overflow-hidden" style={{ animationDelay: '0.4s' }}>
           <div className="absolute inset-0 bg-gradient-shine opacity-0 hover:opacity-100 animate-netflix-shimmer"></div>
           <div className="relative z-10 max-w-3xl">
-            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4 netflix-text-glow">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 sm:mb-4 netflix-text-glow">
               Let's Create Something Amazing
             </h2>
-            <p className="text-lg text-netflix-text-secondary mb-8">
+            <p className="text-base sm:text-lg text-netflix-text-secondary mb-6 sm:mb-8">
               Ready to bring your ideas to life? Let's collaborate on your next project.
             </p>
             <div className="flex flex-wrap gap-4">

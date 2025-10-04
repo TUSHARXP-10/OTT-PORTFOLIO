@@ -1,3 +1,7 @@
+/* Netflix Typography - MUST come first before all other statements */
+@import url('https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -85,10 +89,6 @@
     --shadow-text: 2px 2px 4px hsl(0 0% 0% / 0.8);
   }
 }
-
-/* Netflix Typography */
-@import url('https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   body {
